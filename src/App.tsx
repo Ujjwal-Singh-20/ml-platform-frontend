@@ -14,7 +14,7 @@ import { TrackPage } from './pages/TrackPage';
 import { SuggestedRoutePage } from './pages/SuggestedRoutePage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { SettingsModal } from './components/SettingsModal';
-import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { BackendStatus } from './components/BackendStatus';
 import { ElabsLogo } from './components/ElabsLogo';
 import { Settings, Map } from 'lucide-react';
