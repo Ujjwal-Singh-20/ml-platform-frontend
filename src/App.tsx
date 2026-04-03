@@ -12,6 +12,7 @@ import { ProfilePage } from './pages/ProfilePage';
 import { AdminPage } from './pages/AdminPage';
 import { TrackPage } from './pages/TrackPage';
 import { SuggestedRoutePage } from './pages/SuggestedRoutePage';
+import { NotFoundPage } from './pages/NotFoundPage';
 import { SettingsModal } from './components/SettingsModal';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { BackendStatus } from './components/BackendStatus';
@@ -141,7 +142,7 @@ function AppContent() {
         } />
 
         {/* Catch-all */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
 
       <SettingsModal isOpen={showSettings} onClose={() => setShowSettings(false)} />
