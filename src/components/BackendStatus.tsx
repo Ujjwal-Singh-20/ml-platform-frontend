@@ -12,6 +12,7 @@ export const BackendStatus: React.FC = () => {
     const pingBackend = async () => {
       try {
         const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+        await fetch("https://judge0-lite.onrender.com/");
         const response = await fetch(`${backendUrl}/`);
         if (response.ok) {
           setStatus('online');
