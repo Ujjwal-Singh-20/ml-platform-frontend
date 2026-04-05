@@ -16,14 +16,11 @@ export const BackendStatus: React.FC = () => {
         if (response.ok) {
           setStatus('online');
 
-          // Wake up the execution engine in the background
+          // --- ENGINE WAKE-UP WORKAROUND ---
+          // Ping the engine via our backend health proxy to trigger the cold start.
+          // This keeps the engine's real URL hidden from the browser console/network tab.
           try {
-            const configRes = await fetch(`${backendUrl}/config/engine-url`);
-            if (configRes.ok) {
-              const { engine_url } = await configRes.json();
-              // Direct browser ping (no-cors) to trigger cold start on Render
-              fetch(`${engine_url}/`, { mode: 'no-cors' }).catch(() => {});
-            }
+            fetch(`${backendUrl}/health/engine`).catch(() => {});
           } catch (e) { /* Silent background wake-up fail */ }
         } else {
           throw new Error();

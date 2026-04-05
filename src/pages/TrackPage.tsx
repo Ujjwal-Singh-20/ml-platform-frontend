@@ -190,17 +190,26 @@ export const TrackPage = ({ onBack }: { onBack: () => void }) => {
       const payload: any = { level_id: activeLevel.level_id, source_code: code, files: [] };
       if (selectedFile) payload.files.push(selectedFile);
       const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+      // --- SECURE ENGINE WAKE-UP WORKAROUND ---
+      // We poll our backend health proxy to trigger the engine cold-start.
+      // This hides the engine URL and avoids Render's 30s timeout on long requests.
+      setStdout('Waking up systems...\n');
+      let isEngineReady = false;
+      for (let i = 0; i < 15; i++) { // Poll for ~30 seconds
+        try {
+          const hRes = await fetch(`${backendUrl}/health/engine`);
+          if (hRes.ok) {
+            const hData = await hRes.json();
+            if (hData.status === 'online') {
+              isEngineReady = true;
+              break;
+            }
+          }
+        } catch (e) { /* Ignore poll errors */ }
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      }
 
-      // --- ENGINE WAKE-UP WORKAROUND ---
-      // Directly ping the engine from the browser to ensure it's waking up
-      try {
-        const configRes = await fetch(`${backendUrl}/config/engine-url`);
-        if (configRes.ok) {
-          const { engine_url } = await configRes.json();
-          // Fire a no-cors ping (like curl) to trigger Render cold-start
-          await fetch(`${engine_url}/`, { mode: 'no-cors' }).catch(() => {});
-        }
-      } catch (e) { /* Silent wake-up */ }
+      setStdout(isEngineReady ? 'Executing against hidden datasets...\n' : 'Still waking up... attempting execution anyway.\n');
 
       const res = await fetch(`${backendUrl}/execute-and-evaluate`, {
         method: 'POST',
