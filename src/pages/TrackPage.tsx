@@ -190,6 +190,18 @@ export const TrackPage = ({ onBack }: { onBack: () => void }) => {
       const payload: any = { level_id: activeLevel.level_id, source_code: code, files: [] };
       if (selectedFile) payload.files.push(selectedFile);
       const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+
+      // --- ENGINE WAKE-UP WORKAROUND ---
+      // Directly ping the engine from the browser to ensure it's waking up
+      try {
+        const configRes = await fetch(`${backendUrl}/config/engine-url`);
+        if (configRes.ok) {
+          const { engine_url } = await configRes.json();
+          // Fire a no-cors ping (like curl) to trigger Render cold-start
+          await fetch(`${engine_url}/`, { mode: 'no-cors' }).catch(() => {});
+        }
+      } catch (e) { /* Silent wake-up */ }
+
       const res = await fetch(`${backendUrl}/execute-and-evaluate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, 'X-Gemini-Key': geminiKey },

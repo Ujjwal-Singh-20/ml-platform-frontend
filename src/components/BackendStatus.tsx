@@ -12,10 +12,19 @@ export const BackendStatus: React.FC = () => {
     const pingBackend = async () => {
       try {
         const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
-        await fetch("https://judge0-lite.onrender.com/");
         const response = await fetch(`${backendUrl}/`);
         if (response.ok) {
           setStatus('online');
+
+          // Wake up the execution engine in the background
+          try {
+            const configRes = await fetch(`${backendUrl}/config/engine-url`);
+            if (configRes.ok) {
+              const { engine_url } = await configRes.json();
+              // Direct browser ping (no-cors) to trigger cold start on Render
+              fetch(`${engine_url}/`, { mode: 'no-cors' }).catch(() => {});
+            }
+          } catch (e) { /* Silent background wake-up fail */ }
         } else {
           throw new Error();
         }
