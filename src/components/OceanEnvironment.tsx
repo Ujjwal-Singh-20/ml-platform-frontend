@@ -60,7 +60,7 @@ function IslandTerrain() {
   return (
     <primitive
       object={scene}
-      scale={[25, 25, 25]} // Scaled to 25x to ensure track islands fit inside the hole
+      scale={[23, 23, 23]} // Scaled to 25x to ensure track islands fit inside the hole
       position={[0.5, -2, -0.5]}
       rotation={[0, 0, 0]}
       receiveShadow

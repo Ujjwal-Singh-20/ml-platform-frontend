@@ -6,7 +6,7 @@ export function ElabsLogo() {
   return (
     <primitive
       object={scene}
-      scale={[5, 5, 5]}
+      scale={[4.5, 4.5, 4.5]}
       position={[0, -1, 0]}
       rotation={[0, -Math.PI / 2, 0]}
       castShadow

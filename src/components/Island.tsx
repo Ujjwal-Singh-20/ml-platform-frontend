@@ -28,7 +28,7 @@ export function Island({ url, position, rotation = [0, 0, 0], name, isActive, is
     if (!groupRef.current) return;
 
     // Scale animation
-    const targetScale = isHovered ? 2.0 : 1.5;
+    const targetScale = isHovered ? 2.5 : 2.0;
     groupRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), delta * 5);
 
     // Animate glow / materials if needed here on hover
@@ -79,7 +79,7 @@ export function Island({ url, position, rotation = [0, 0, 0], name, isActive, is
         }}
       >
         <primitive object={clonedScene} />
-        
+
         {/* Hover Label */}
         <Html center position={[0, 1.2, 0]} pointerEvents="none">
           <AnimatePresence>
@@ -97,9 +97,9 @@ export function Island({ url, position, rotation = [0, 0, 0], name, isActive, is
                 <div className="text-sm font-black text-white uppercase tracking-tighter font-outfit">
                   {name}
                 </div>
-                
+
                 {/* Pointer Decor */}
-                <div 
+                <div
                   className="w-1.5 h-1.5 rounded-full absolute -bottom-3 left-1/2 -translate-x-1/2 shadow-[0_0_10px_rgba(255,255,255,0.5)]"
                   style={{ backgroundColor: color }}
                 />
