@@ -47,7 +47,7 @@ export const LevelDocPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0f18] text-slate-200 font-mono selection:bg-cyan-500/30">
+    <div className="h-screen overflow-y-auto bg-[#0a0f18] text-slate-200 font-mono selection:bg-cyan-500/30 custom-scrollbar">
       {/* Background Decor */}
       <div className="fixed inset-0 pointer-events-none opacity-20">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-cyan-600/20 rounded-full blur-[120px]" />
