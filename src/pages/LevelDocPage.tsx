@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect } from 'react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { ArrowLeft, Book, ExternalLink, Activity, Info, Lightbulb } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -9,8 +9,9 @@ import { useLevels } from '../context/LevelContext';
 export const LevelDocPage = () => {
   const { trackId, levelId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { tracks, loading } = useLevels();
-  
+
   const track = tracks.find(t => t.id === trackId);
   const level = track?.levels.find(l => l.level_id === levelId);
 
@@ -22,7 +23,7 @@ export const LevelDocPage = () => {
   if (loading) {
     return (
       <div className="w-full h-screen flex items-center justify-center bg-[#0a0f18]">
-        <motion.div 
+        <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
           className="w-12 h-12 border-4 border-cyan-500/30 border-t-cyan-400 rounded-full"
@@ -35,7 +36,7 @@ export const LevelDocPage = () => {
     return (
       <div className="w-full h-screen flex flex-col items-center justify-center bg-[#0a0f18] text-white">
         <h1 className="text-4xl font-black mb-4">404_GUIDE_NOT_FOUND</h1>
-        <button 
+        <button
           onClick={() => navigate(`/track/${trackId}`)}
           className="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl flex items-center gap-2 border border-white/20 transition-all"
         >
@@ -72,11 +73,11 @@ export const LevelDocPage = () => {
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-4 mb-4"
           >
-            <div 
+            <div
               className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shadow-lg border border-white/10"
               style={{ backgroundColor: `${track?.color}22`, color: track?.color }}
             >
-              {track?.icon || '?' }
+              {track?.icon || '?'}
             </div>
             <div>
               <p className="text-xs font-black uppercase tracking-[0.3em] opacity-50" style={{ color: track?.color }}>
@@ -121,35 +122,35 @@ export const LevelDocPage = () => {
 
         {/* Level Features / Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-           <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
             className="p-6 rounded-2xl bg-white/5 border border-white/10"
-           >
-              <div className="flex items-center gap-3 mb-4 text-cyan-400">
-                <Activity size={20} />
-                <h3 className="font-black uppercase tracking-wider text-sm">Challenge Objective</h3>
-              </div>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                {level.goal}
-              </p>
-           </motion.div>
+          >
+            <div className="flex items-center gap-3 mb-4 text-cyan-400">
+              <Activity size={20} />
+              <h3 className="font-black uppercase tracking-wider text-sm">Challenge Objective</h3>
+            </div>
+            <p className="text-slate-400 text-sm leading-relaxed">
+              {level.goal}
+            </p>
+          </motion.div>
 
-           <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3 }}
             className="p-6 rounded-2xl bg-white/5 border border-white/10"
-           >
-              <div className="flex items-center gap-3 mb-4 text-amber-400">
-                <Lightbulb size={20} />
-                <h3 className="font-black uppercase tracking-wider text-sm">Why It Matters</h3>
-              </div>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                {level.why_this_matters}
-              </p>
-           </motion.div>
+          >
+            <div className="flex items-center gap-3 mb-4 text-amber-400">
+              <Lightbulb size={20} />
+              <h3 className="font-black uppercase tracking-wider text-sm">Why It Matters</h3>
+            </div>
+            <p className="text-slate-400 text-sm leading-relaxed">
+              {level.why_this_matters}
+            </p>
+          </motion.div>
         </div>
 
         {/* Extra Resources */}
