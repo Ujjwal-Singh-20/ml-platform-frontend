@@ -11,6 +11,7 @@ import { LandingPage } from './pages/LandingPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { AdminPage } from './pages/AdminPage';
 import { TrackPage } from './pages/TrackPage';
+import { LevelDocPage } from './pages/LevelDocPage';
 import { SuggestedRoutePage } from './pages/SuggestedRoutePage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { SettingsModal } from './components/SettingsModal';
@@ -118,7 +119,7 @@ function AppContent() {
                 }`}
             >
               <h1 className="text-ui-title font-black tracking-tighter drop-shadow-[0_10px_30px_rgba(34,211,238,0.4)] uppercase font-outfit text-cyan-100">
-                {brainrotMode ? "AI SKIBIDI WORLD" : "AI WORLD"}
+                {brainrotMode ? "AI SKIBIDI WORLD" : "AI VERSE"}
               </h1>
               <p className="text-ui-xs mt-3 font-black uppercase tracking-[0.4em] font-mono text-lime-300 drop-shadow-md">
                 {brainrotMode
@@ -139,6 +140,10 @@ function AppContent() {
 
         <Route path="/suggested-route" element={
           <SuggestedRoutePage onBack={() => navigate('/')} />
+        } />
+
+        <Route path="/track/:trackId/level/:levelId/docs" element={
+          <LevelDocPage />
         } />
 
         {/* Catch-all */}

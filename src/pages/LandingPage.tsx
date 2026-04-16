@@ -26,11 +26,11 @@ export const LandingPage: React.FC = () => {
       <div className="z-10 w-full px-6">
         <div className="max-w-xl mx-auto rounded-4xl border border-white/30 bg-white/12 backdrop-blur-2xl shadow-[0_25px_80px_rgba(4,17,35,0.55)] p-8 md:p-10 text-center animate-in fade-in duration-1000 slide-in-from-bottom-8">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-sky-100/30 bg-sky-100/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-sky-100/90 font-mono">
-            KIIT AI PLATFORM
+            PATTERNS TO PURPOSE
           </div>
 
           <h1 className="text-5xl md:text-7xl font-black mb-4 tracking-tighter bg-linear-to-r from-cyan-100 to-blue-100 bg-clip-text text-transparent font-outfit leading-[0.95]">
-            AI WORLD
+            AI VERSE
           </h1>
           <p className="text-sky-100/75 mb-8 text-base md:text-lg max-w-lg mx-auto font-medium font-inter leading-relaxed">
             Access an interactive AI learning environment with guided tracks, mission-based levels, and structured progress mapping.

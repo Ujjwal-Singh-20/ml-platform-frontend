@@ -71,7 +71,7 @@ export const AdminPage: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           </button>
           <div>
             <h1 className="text-4xl font-black text-slate-800 tracking-tight uppercase font-outfit">Control Center</h1>
-            <p className="text-slate-500 font-black text-[10px] uppercase tracking-[0.3em] mt-1 font-mono">KIIT AI WORLD // ADMINISTRATION</p>
+            <p className="text-slate-500 font-black text-[10px] uppercase tracking-[0.3em] mt-1 font-mono">AI VERSE // ADMINISTRATION</p>
           </div>
         </div>
 

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLevels } from '../context/LevelContext';
-import { Play, ArrowLeft, Terminal, Bot, CheckCircle, Lock, Book, GripVertical, GripHorizontal, Download, Upload } from 'lucide-react';
+import { Play, ArrowLeft, Terminal, Bot, CheckCircle, Lock, Book, GripVertical, GripHorizontal, Download, Upload, ExternalLink } from 'lucide-react';
 import { FileUpload } from '../components/FileUpload';
 import { motion, AnimatePresence } from 'framer-motion';
 import Editor from '@monaco-editor/react';
@@ -428,17 +428,28 @@ export const TrackPage = ({ onBack }: { onBack: () => void }) => {
             </section>
           )}
 
-          {/* Docs link */}
-          {activeLevel.resource_link && (
-            <a href={activeLevel.resource_link} target="_blank" rel="noreferrer"
-              className="flex items-center gap-3 bg-white/5 hover:bg-white/10 p-3.5 rounded-xl border border-white/5 transition-all w-fit cursor-pointer">
-              <div className="bg-white/10 p-1.5 rounded-lg text-slate-300"><Book size={14} /></div>
-              <div>
-                <span className="block text-ui-2xs font-black uppercase tracking-widest font-mono text-slate-500">Data_Logs</span>
-                <span className="text-ui-xs font-bold text-blue-400">View Recommended Docs</span>
+          {/* Documentation Guide Link */}
+          <section className="pt-2">
+            <motion.button
+              whileHover={{ scale: 1.02, backgroundColor: "rgba(34, 211, 238, 0.15)" }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => navigate(`/track/${trackId}/level/${activeLevel.level_id}/docs`)}
+              className="w-full flex items-center justify-between p-5 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 group transition-all cursor-pointer shadow-lg shadow-cyan-500/5"
+            >
+              <div className="flex items-center gap-4">
+                <div className="bg-cyan-500 shadow-[0_0_15px_rgba(34,211,238,0.4)] p-2.5 rounded-xl text-white group-hover:scale-110 transition-transform">
+                  <Book size={20} />
+                </div>
+                <div className="text-left">
+                  <span className="block text-ui-2xs font-black uppercase tracking-[0.2em] font-mono text-cyan-400 group-hover:text-cyan-300 transition-colors">Documentation</span>
+                  <span className="text-ui-xs font-bold text-white group-hover:text-cyan-100 transition-colors">Level Guide & Resources</span>
+                </div>
               </div>
-            </a>
-          )}
+              <div className="text-cyan-500/30 group-hover:text-cyan-400 transition-colors pr-1">
+                <ExternalLink size={20} />
+              </div>
+            </motion.button>
+          </section>
         </div>
       </div>
 
@@ -496,6 +507,9 @@ export const TrackPage = ({ onBack }: { onBack: () => void }) => {
 
           {/* Console body */}
           <div className="flex-1 overflow-y-auto custom-scrollbar p-3 font-mono text-ui-xs text-slate-300">
+            {stderr && <div className="mb-3 whitespace-pre-wrap text-rose-400 bg-rose-500/5 p-2.5 rounded-lg border border-rose-500/10 text-ui-xs">{stderr}</div>}
+            {stdout && <div className="whitespace-pre-wrap text-[#A3B8CC] text-ui-xs mb-3">{stdout}</div>}
+
             <AnimatePresence>
               {aiFeedback && (
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
@@ -516,8 +530,7 @@ export const TrackPage = ({ onBack }: { onBack: () => void }) => {
                 </motion.div>
               )}
             </AnimatePresence>
-            {stderr && <div className="mb-3 whitespace-pre-wrap text-rose-400 bg-rose-500/5 p-2.5 rounded-lg border border-rose-500/10 text-ui-xs">{stderr}</div>}
-            {stdout && <div className="whitespace-pre-wrap text-[#A3B8CC] text-ui-xs">{stdout}</div>}
+
             {!stdout && !stderr && !aiFeedback && (
               <div className="flex items-center justify-center h-full text-slate-600 uppercase tracking-widest font-black text-ui-2xs">System Idle_</div>
             )}

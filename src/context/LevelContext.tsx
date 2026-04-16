@@ -6,6 +6,7 @@ export interface Level {
   track: string;
   level_title: string;
   resource_link: string;
+  resource_links?: { title: string; link: string }[];
   execution_mode: 'code' | 'model' | 'api';
   input_contract: any;
   output_contract: any;
@@ -21,6 +22,7 @@ export interface Level {
   has_training_dataset?: boolean;
   training_dataset_description?: string;
   training_dataset_files?: string[];
+  guide_markdown?: string;
 }
 
 export interface TrackData {
