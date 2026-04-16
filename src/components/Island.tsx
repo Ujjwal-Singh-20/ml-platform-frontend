@@ -1,6 +1,7 @@
-import { useGLTF, Float } from '@react-three/drei';
+import { useGLTF, Float, Html } from '@react-three/drei';
 import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { motion, AnimatePresence } from 'framer-motion';
 import * as THREE from 'three';
 
 interface IslandProps {
@@ -11,11 +12,12 @@ interface IslandProps {
   description: string;
   isActive: boolean;
   isHovered: boolean;
+  color: string;
   onClick: () => void;
   onHover: (hovered: boolean) => void;
 }
 
-export function Island({ url, position, rotation = [0, 0, 0], isActive, isHovered, onClick, onHover }: IslandProps) {
+export function Island({ url, position, rotation = [0, 0, 0], name, isActive, isHovered, color, onClick, onHover }: IslandProps) {
   const { scene } = useGLTF(url);
   const groupRef = useRef<THREE.Group>(null);
 
@@ -77,6 +79,34 @@ export function Island({ url, position, rotation = [0, 0, 0], isActive, isHovere
         }}
       >
         <primitive object={clonedScene} />
+        
+        {/* Hover Label */}
+        <Html center position={[0, 1.2, 0]} pointerEvents="none">
+          <AnimatePresence>
+            {isHovered && !isActive && (
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 5, scale: 0.9 }}
+                className="whitespace-nowrap px-4 py-2 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl flex flex-col items-center gap-1"
+                style={{ background: `${color}22` }}
+              >
+                <div className="text-[10px] font-black uppercase tracking-[0.3em] opacity-50" style={{ color }}>
+                  Track_Active
+                </div>
+                <div className="text-sm font-black text-white uppercase tracking-tighter font-outfit">
+                  {name}
+                </div>
+                
+                {/* Pointer Decor */}
+                <div 
+                  className="w-1.5 h-1.5 rounded-full absolute -bottom-3 left-1/2 -translate-x-1/2 shadow-[0_0_10px_rgba(255,255,255,0.5)]"
+                  style={{ backgroundColor: color }}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </Html>
       </group>
     </Float>
   );

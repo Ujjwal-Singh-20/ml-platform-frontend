@@ -68,6 +68,7 @@ export function WorldMap({ activeTrack, setActiveTrack }: { activeTrack: string 
             rotation={POSITIONS[track.id]?.rotation || [0, 0, 0]}
             name={track.name}
             description={track.description}
+            color={track.color}
             isActive={activeTrack === track.id}
             isHovered={hoveredTrack === track.id}
             onClick={() => setActiveTrack(activeTrack === track.id ? null : track.id)}
